@@ -7,6 +7,9 @@ MAP_HEIGHT = APP_HEIGHT
 rgb2hex = lambda r,g,b: f"#{r:02x}{g:02x}{b:02x}"
 
 MAP_BG = rgb2hex(117, 245, 66)
+START_MARGIN = (50, 50)
 
+MAX_SNAKE_SIZE = 30
 
-BASE_SPEED = 2
+BASE_SPEED = 60 # 28
+LOOP_TIME = 300

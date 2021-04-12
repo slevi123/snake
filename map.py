@@ -12,3 +12,11 @@ class Map(Canvas):
         self.barriers[0].draw(self)
 
         Snake(self, 'red')
+        # self.bind("<Button>", self.loop)
+        self.loop()
+
+    def loop(self):
+        # print('mozog')
+        for snake in Snake.snakes_alive:
+            snake.move()
+        self.winfo_toplevel().after(consts.LOOP_TIME, self.loop)
