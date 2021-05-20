@@ -5,16 +5,20 @@ from PIL import Image
 from PIL.ImageTk import PhotoImage
 
 
-def hilo(a, b, c):
-    if c < b: b, c = c, b
-    if b < a: a, b = b, a
-    if c < b: b, c = c, b
-    return a + c
+# def hilo(a, b, c):
+#     """returns the sum of the highest and the lowest values"""
+#     #  Basic sorting network, ascendant
+#     if c < b: b, c = c, b
+#     if b < a: a, b = b, a
+#     if c < b: b, c = c, b
+#
+#     return a + c
 
 
-def complementary_color(r, g, b):
-    k = hilo(r, g, b)
-    return tuple(k - u for u in (r, g, b))
+# def complementary_color(r, g, b):
+#     """Complementary color"""
+#     k = hilo(r, g, b)
+#     return tuple(k - u for u in (r, g, b))
 
 
 def rgb2hex(r, g, b):

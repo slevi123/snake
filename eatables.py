@@ -8,6 +8,9 @@ from program_config import main_game_frame
 from snake import Snake
 
 
+# class MultiMixin
+
+
 class ReverseMixin:
     def action(self, snake, **kwargs):
         # TODO: resolve this jumbo
@@ -111,18 +114,25 @@ class Eatable:
         pass
 
 
-class Switch(Eatable):
+class Switch(ReverseMixin, Eatable):
     photo = None
     image_path = "res/png/eatables/switch.png"
 
     possible_mods = ["others"]
 
     @staticmethod
+    def reverse_effect(snake, **kwargs):
+        for snaki in kwargs["snakes"]:
+            snaki.move_bind_table = snaki.move_bind_table_n.copy()
+
+    @staticmethod
     def effect(snake, **kwargs):
+        # FIXME
         for snaki in kwargs["snakes"]:
             if snaki != snake:
                 snaki.move_bind_table["left"], snaki.move_bind_table["right"] = \
                     snaki.move_bind_table["right"], snaki.move_bind_table["left"]
+        return kwargs
 
 
 class Wallwalker(ReverseMixin, Eatable):

@@ -26,7 +26,7 @@ class Snake:
 
         self.name = snake_model.name
 
-        self.wallwalker = False
+        self.wallwalker = True
         self.color = snake_model.color
         self.speed = consts.BASE_SPEED  # TODO: refactor
         map_size = main_game_frame.MAP_SIZE
@@ -50,7 +50,8 @@ class Snake:
         # self.bind_ids = []
         self.eatable_timing_table = dict()
 
-        self.move_bind_table = snake_model.move_bind_table
+        self.move_bind_table_n = snake_model.move_bind_table
+        self.move_bind_table = snake_model.move_bind_table.copy()
 
         self.direction_circle = DirectionCircle.random_direction()
 
@@ -71,6 +72,7 @@ class Snake:
 
     def turn_off_safety(self):
         self.safety = False
+        self.wallwalker = False
 
     @property
     def coords(self):
@@ -123,7 +125,7 @@ class Snake:
             self.game.map.canvas.delete(self.shape_queue.popleft())
 
         self.shape_queue.append(self.head)
-        self.pre_overlap.append(self.head)
+        # self.pre_overlap.append(self.head)
 
         # vc = self.game.map.canvas.coords(self.head_visual)
         # self.game.map.canvas.move(self.head_visual, self.x - vc[0], self.y - vc[1])
@@ -200,18 +202,19 @@ class Snake:
         if bbox:  # FIXME: this is a temporary patch
             overlappers = self.game.map.canvas.find_overlapping(*bbox)
 
-            new_pre_overlappers = []
-            for item in self.pre_overlap:
-                if item in overlappers:
-                    new_pre_overlappers.append(item)
-            self.pre_overlap = new_pre_overlappers
+            # new_pre_overlappers = []
+            # for item in self.pre_overlap:
+            #     if item in overlappers:
+            #         new_pre_overlappers.append(item)
+            # self.pre_overlap = new_pre_overlappers
 
             if overlappers:
                 barrier_ids = self.game.map.canvas.find_withtag('barrier')
                 snake_bodies_ids = self.game.map.canvas.find_withtag('snake_body')
                 for item in overlappers:
                     if (item in barrier_ids) or (item in snake_bodies_ids):
-                        if item not in self.pre_overlap:
+                        # if item not in self.pre_overlap:
+                        if item != self.head:
                             return True
 
         return False
